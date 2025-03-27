@@ -23,7 +23,7 @@ export default function LoginScreen() {
 
   return (
     <LinearGradient
-      colors={['#3B5998', '#4FBDBA']} 
+      colors={['#3B5998', '#4FBDBA']}
       style={styles.gradient}
     >
       <View style={styles.container}>
@@ -49,7 +49,7 @@ export default function LoginScreen() {
             secureTextEntry
           />
         </View>
-        <TouchableOpacity onPress={() => console.log('Forgot Password pressed')}>
+        <TouchableOpacity onPress={() => router.push('/auth/ForgotPassword')}>
           <Text style={styles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
         <Pressable style={styles.loginButton} onPress={handleLogin}>
