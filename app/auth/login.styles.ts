@@ -1,19 +1,21 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 24,
     paddingTop: 60,
-    backgroundColor: '#FFFFFF',
   },
   topImage: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     resizeMode: 'contain',
     alignSelf: 'center',
     marginBottom: 20,
-    borderRadius: 8,
+    borderRadius: 75,
   },
   title: {
     fontSize: 22,
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     alignSelf: 'flex-end',
-    color: '#666',
+    color: '#FFFFFF', // Changed to white
     marginBottom: 16,
   },
   loginButton: {
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
   },
   dividerText: {
     marginHorizontal: 8,
-    color: '#666',
+    color: '#FFFFFF', // Changed to white
   },
   socialButton: {
     flexDirection: 'row',
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   bottomText: {
-    color: '#666',
+    color: '#FFFFFF', // Changed to white
     fontSize: 14,
   },
   signUpText: {

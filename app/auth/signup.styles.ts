@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 24,
     paddingTop: 60,
-    backgroundColor: '#FFFFFF',
   },
   title: {
     fontSize: 22,
