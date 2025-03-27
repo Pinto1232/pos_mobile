@@ -9,9 +9,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-
-// Example placeholders for Apple/Google icons.
-// You can use react-native-vector-icons or your own images.
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function LoginScreen() {
@@ -20,25 +17,18 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Placeholder login logic
     console.log('Email or Phone:', email);
     console.log('Password:', password);
-    // Navigate to your tabs (main app)
     router.replace('/(tabs)');
   };
 
   return (
     <View style={styles.container}>
-      {/* Top Image */}
       <Image
-        source={require('../../assets/images/logo.jpg')} 
+        source={require('../../assets/images/logo.jpg')}
         style={styles.topImage}
       />
-
-      {/* Title */}
       <Text style={styles.title}>Let’s Connect With Us!</Text>
-
-      {/* Input Fields */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -56,37 +46,32 @@ export default function LoginScreen() {
           secureTextEntry
         />
       </View>
-
-      {/* Forgot Password */}
       <TouchableOpacity onPress={() => console.log('Forgot Password pressed')}>
         <Text style={styles.forgotText}>Forgot Password?</Text>
       </TouchableOpacity>
-
-      {/* Login Button */}
       <Pressable style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>
       </Pressable>
-
-      {/* OR Divider */}
       <View style={styles.dividerContainer}>
         <View style={styles.dividerLine} />
         <Text style={styles.dividerText}>or</Text>
         <View style={styles.dividerLine} />
       </View>
-
-      {/* Sign Up with Apple */}
       <Pressable style={[styles.socialButton, { backgroundColor: '#000' }]}>
         <FontAwesome name="apple" size={20} color="#fff" />
         <Text style={styles.socialButtonText}>Sign up with Apple</Text>
       </Pressable>
-
-      {/* Sign Up with Google */}
-      <Pressable style={[styles.socialButton, { backgroundColor: '#fff', borderWidth: 1, borderColor: '#ccc' }]}>
+      <Pressable
+        style={[
+          styles.socialButton,
+          { backgroundColor: '#fff', borderWidth: 1, borderColor: '#ccc' },
+        ]}
+      >
         <FontAwesome name="google" size={20} color="#EA4335" />
-        <Text style={[styles.socialButtonText, { color: '#333' }]}>Sign up with Google</Text>
+        <Text style={[styles.socialButtonText, { color: '#333' }]}>
+          Sign up with Google
+        </Text>
       </Pressable>
-
-      {/* Sign Up Link */}
       <View style={styles.bottomTextContainer}>
         <Text style={styles.bottomText}>Don't have an account?</Text>
         <Pressable onPress={() => console.log('Sign Up pressed')}>
@@ -105,10 +90,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   topImage: {
-    width: 150, // Adjusted width for better clarity
-    height: 150, // Adjusted height for better clarity
-    resizeMode: 'contain', // Ensures the image is not distorted
-    alignSelf: 'center', // Centers the image horizontally
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    alignSelf: 'center',
     marginBottom: 20,
     borderRadius: 8,
   },
@@ -134,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   loginButton: {
-    backgroundColor: '#8BC34A', // or your brand color
+    backgroundColor: '#8BC34A',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
