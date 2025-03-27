@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   loginButton: {
-    backgroundColor: '#8BC34A',
+    backgroundColor: '#1E3A8A',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+    backgroundColor: 'transparent',
   },
   bottomTextContainer: {
     flexDirection: 'row',
