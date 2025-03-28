@@ -62,6 +62,10 @@ export default function SplashScreen() {
         <Text style={styles.loadingText}>
           Loading{dots}
         </Text>
+        <Image
+          source={require('../assets/images/pos.png')}
+          style={[styles.bottomImage, { width: 580, height: 450, marginTop: 40 }]}
+        />
       </View>
     </LinearGradient>
   );
@@ -82,6 +86,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     alignSelf: 'center',
     borderRadius: 80,
+    marginTop: 120
   },
   text: {
     marginTop: 20,
@@ -93,8 +98,9 @@ const styles = StyleSheet.create({
   loader: { marginTop: 20, color: 'blue' },
   bottomImage: {
     width: 200,
-    height: 250,
+    height: 200,
     resizeMode: 'contain',
+    marginTop: 20,
   },
   loadingText: {
     marginTop: 10,
