@@ -1,35 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import { View, Image, StyleSheet, ActivityIndicator, Animated, Text } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, Image, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, withSequence } from 'react-native-reanimated';
 
 export default function SplashScreen() {
   const router = useRouter();
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useSharedValue(1);
+  const fadeAnim = useSharedValue(0);
   const [dots, setDots] = useState('');
 
   useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(scaleAnim, {
-          toValue: 1.2,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(scaleAnim, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
+    scaleAnim.value = withRepeat(
+      withSequence(
+        withTiming(1.2, { duration: 1000 }),
+        withTiming(1, { duration: 1000 })
+      ),
+      -1,
+      true
+    );
 
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
+    fadeAnim.value = withTiming(1, { duration: 2000 });
 
     const dotInterval = setInterval(() => {
       setDots((prev) => (prev.length < 3 ? prev + '.' : ''));
@@ -45,21 +36,29 @@ export default function SplashScreen() {
     };
   }, []);
 
+  const animatedLogoStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleAnim.value }],
+  }));
+
+  const animatedTextStyle = useAnimatedStyle(() => ({
+    opacity: fadeAnim.value,
+  }));
+
   return (
     <LinearGradient
-      colors={['#1A237E', '#B2EBF2']} // Lighter bottom color
-      locations={[0, 1]} // Ensure the length matches the colors array
+      colors={['#1E3A8A', '#006D77']}
+      locations={[0, 1]}
       style={styles.gradient}
     >
       <View style={styles.container}>
         <Animated.Image
           source={require('../assets/images/logo.jpg')}
-          style={[styles.logo, { transform: [{ scale: scaleAnim }] }]}
+          style={[styles.logo, animatedLogoStyle]}
         />
-        <Animated.Text style={[styles.text, { opacity: fadeAnim }]}>
+        <Animated.Text style={[styles.text, animatedTextStyle]}>
           Welcome To Pisval Tech POS
         </Animated.Text>
-        <ActivityIndicator size="large" color="#4E67EB" style={styles.loader} />
+        <ActivityIndicator size="large" color="#FE6903" style={styles.loader} />
         <Text style={styles.loadingText}>
           Loading{dots}
         </Text>
