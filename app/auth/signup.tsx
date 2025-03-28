@@ -5,6 +5,7 @@ import {
   TextInput,
   Pressable,
   StyleSheet,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from './signup.styles';
@@ -25,7 +26,7 @@ export default function SignUpScreen() {
 
   return (
     <LinearGradient
-      colors={['#3B5998', '#4FBDBA']} 
+      colors={['#3B5998', '#4FBDBA']}
       style={styles.gradient}
     >
       <View style={styles.container}>
@@ -55,6 +56,10 @@ export default function SignUpScreen() {
         <Pressable style={styles.signUpButton} onPress={handleSignUp}>
           <Text style={styles.signUpButtonText}>Sign Up</Text>
         </Pressable>
+        <Image
+          source={require('../../assets/images/pos.png')}
+          style={[styles.bottomImage, { width: 500, height: 420, marginTop: 69, marginLeft: -30 }]}
+        />
       </View>
     </LinearGradient>
   );

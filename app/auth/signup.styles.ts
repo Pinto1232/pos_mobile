@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  bottomImage: {
+    width: 200,
+    height: 250,
+    resizeMode: 'contain',
+  },
 });
 
 export default styles;
