@@ -9,6 +9,7 @@ export default function SplashScreen() {
   const scaleAnim = useSharedValue(1);
   const fadeAnim = useSharedValue(0);
   const [dots, setDots] = useState('');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     scaleAnim.value = withRepeat(
@@ -62,9 +63,17 @@ export default function SplashScreen() {
         <Text style={styles.loadingText}>
           Loading{dots}
         </Text>
+        {!imageLoaded && (
+          <ActivityIndicator size="large" color="#FFFFFF" style={styles.loader} />
+        )}
         <Image
           source={require('../assets/images/pos.png')}
-          style={[styles.bottomImage, { width: 580, height: 450, marginTop: 40 }]}
+          style={[
+            styles.bottomImage,
+            { width: 580, height: 450, marginTop: 40 },
+            !imageLoaded && { opacity: 0 },
+          ]}
+          onLoad={() => setImageLoaded(true)}
         />
       </View>
     </LinearGradient>
@@ -76,6 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
+    backgroundColor: '#1E3A8A',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'

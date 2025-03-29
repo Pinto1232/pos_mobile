@@ -6,16 +6,19 @@ import {
   Pressable,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import styles from '@/app/auth/login.styles';
+import externalStyles from '@/app/auth/login.styles';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function LoginScreen() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleLogin = () => {
     router.replace('/(tabs)');
@@ -24,17 +27,24 @@ export default function LoginScreen() {
   return (
     <LinearGradient
       colors={['#3B5998', '#4FBDBA']}
-      style={styles.gradient}
+      style={[externalStyles.gradient, styles.gradient]}
     >
-      <View style={styles.container}>
+      <View style={[externalStyles.container, styles.container]}>
+        {!imageLoaded && (
+          <ActivityIndicator size="large" color="#FFFFFF" style={styles.loader} />
+        )}
         <Image
           source={require('../../assets/images/logo.jpg')}
-          style={styles.topImage}
+          style={[
+            externalStyles.topImage,
+            !imageLoaded && { opacity: 0 },
+          ]}
+          onLoad={() => setImageLoaded(true)}
         />
-        <Text style={styles.title}>Let’s Connect With You!</Text>
-        <View style={styles.inputContainer}>
+        <Text style={externalStyles.title}>Let’s Connect With You!</Text>
+        <View style={externalStyles.inputContainer}>
           <TextInput
-            style={styles.input}
+            style={externalStyles.input}
             placeholder="Email or Phone Number"
             value={email}
             onChangeText={setEmail}
@@ -42,7 +52,7 @@ export default function LoginScreen() {
             autoCapitalize="none"
           />
           <TextInput
-            style={styles.input}
+            style={externalStyles.input}
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
@@ -50,38 +60,51 @@ export default function LoginScreen() {
           />
         </View>
         <TouchableOpacity onPress={() => router.push('/auth/ForgotPassword')}>
-          <Text style={styles.forgotText}>Forgot Password?</Text>
+          <Text style={externalStyles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
-        <Pressable style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.loginButtonText}>Login</Text>
+        <Pressable style={externalStyles.loginButton} onPress={handleLogin}>
+          <Text style={externalStyles.loginButtonText}>Login</Text>
         </Pressable>
-        <View style={styles.dividerContainer}>
-          <View style={styles.dividerLine} />
-          <Text style={styles.dividerText}>or</Text>
-          <View style={styles.dividerLine} />
+        <View style={externalStyles.dividerContainer}>
+          <View style={externalStyles.dividerLine} />
+          <Text style={externalStyles.dividerText}>or</Text>
+          <View style={externalStyles.dividerLine} />
         </View>
-        <Pressable style={[styles.socialButton, { backgroundColor: '#000' }]}>
+        <Pressable style={[externalStyles.socialButton, { backgroundColor: '#000' }]}>
           <FontAwesome name="apple" size={20} color="#fff" />
-          <Text style={styles.socialButtonText}>Sign up with Apple</Text>
+          <Text style={externalStyles.socialButtonText}>Sign up with Apple</Text>
         </Pressable>
         <Pressable
           style={[
-            styles.socialButton,
+            externalStyles.socialButton,
             { backgroundColor: '#fff', borderWidth: 1, borderColor: '#ccc' },
           ]}
         >
           <FontAwesome name="google" size={20} color="#EA4335" />
-          <Text style={[styles.socialButtonText, { color: '#333' }]}>
+          <Text style={[externalStyles.socialButtonText, { color: '#333' }]}>
             Sign up with Google
           </Text>
         </Pressable>
-        <View style={styles.bottomTextContainer}>
-          <Text style={styles.bottomText}>Don't have an account?</Text>
+        <View style={externalStyles.bottomTextContainer}>
+          <Text style={externalStyles.bottomText}>Don't have an account?</Text>
           <Pressable onPress={() => router.push('/auth/signup')}>
-            <Text style={[styles.bottomText, styles.signUpText]}> Sign Up</Text>
+            <Text style={[externalStyles.bottomText, externalStyles.signUpText]}> Sign Up</Text>
           </Pressable>
         </View>
       </View>
     </LinearGradient>
   );
 }
+
+const styles = StyleSheet.create({
+  loader: {
+    marginTop: 20,
+    alignSelf: 'center',
+  },
+  gradient: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+  },
+});
