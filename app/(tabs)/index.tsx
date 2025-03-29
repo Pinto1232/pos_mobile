@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import PackageSelectionScreen from '@/components/packages/PackageSelectionScreen';
+import PackageContainer from '@/components/packages/packageContainer';
 
 export default function TabOneScreen() {
   return (
     <View>
-      <PackageSelectionScreen />
+      <PackageContainer />
     </View>
   );
 }
