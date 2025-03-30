@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import PackageSelectionScreenPresenter from '@/components/packages/packagePresenter';
+import PackageSelectionScreenPresenter, { PackageType } from '@/components/packages/packagePresenter';
 
-const packageContainer: React.FC = () => {
-    const [selectedPackage, setSelectedPackage] = useState('Starter');
+const PackageContainer: React.FC = () => {
+    const [selectedPackage, setSelectedPackage] = useState<PackageType>('Starter');
     const [searchQuery, setSearchQuery] = useState('');
 
-    const packages = ['Starter', 'Growth', 'Custom', 'Enterprise', 'Premium'];
+    // Explicitly type the packages array
+    const packages: PackageType[] = ['Starter', 'Growth', 'Custom', 'Enterprise', 'Premium'];
 
     return (
         <PackageSelectionScreenPresenter
@@ -18,4 +19,4 @@ const packageContainer: React.FC = () => {
     );
 };
 
-export default packageContainer;
+export default PackageContainer;

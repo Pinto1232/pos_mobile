@@ -1,16 +1,26 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Animated, PanResponder } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import styles from './packageStyles';
 
+export type PackageType = 'Starter' | 'Growth' | 'Custom' | 'Enterprise' | 'Premium';
+
 interface PackageSelectionScreenPresenterProps {
-    selectedPackage: string;
+    selectedPackage: PackageType;
     searchQuery: string;
-    packages: string[];
+    packages: PackageType[];
     onSearchQueryChange: (query: string) => void;
-    onPackageSelect: (pkg: string) => void;
+    onPackageSelect: (pkg: PackageType) => void;
 }
+
+const packageColors = {
+    Starter: '#FF3B3B',
+    Growth: '#00A8A8',
+    Custom: '#1E90FF',
+    Enterprise: '#4CAF50',
+    Premium: '#FFC107',
+};
 
 const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
     selectedPackage,
@@ -19,8 +29,44 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
     onSearchQueryChange,
     onPackageSelect,
 }) => {
+    const [currentPackage, setCurrentPackage] = useState(selectedPackage);
+    const slideAnim = useRef(new Animated.Value(0)).current;
+
+    const handlePackageSelect = (pkg: PackageType) => {
+        Animated.timing(slideAnim, {
+            toValue: 300,
+            duration: 300,
+            useNativeDriver: true,
+        }).start(() => {
+            setCurrentPackage(pkg);
+            slideAnim.setValue(-300);
+            Animated.timing(slideAnim, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: true,
+            }).start();
+        });
+    };
+
+    const panResponder = PanResponder.create({
+        onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dx) > 20,
+        onPanResponderRelease: (_, gestureState) => {
+            const currentIndex = packages.indexOf(currentPackage);
+            if (gestureState.dx < -50 && currentIndex < packages.length - 1) {
+                const nextPackage = packages[currentIndex + 1];
+                onPackageSelect(nextPackage);
+                handlePackageSelect(nextPackage);
+            } else if (gestureState.dx > 50 && currentIndex > 0) {
+                const prevPackage = packages[currentIndex - 1];
+                onPackageSelect(prevPackage);
+                handlePackageSelect(prevPackage);
+            }
+        },
+    });
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
+            {/* Header remains unchanged */}
             <View style={styles.header}>
                 <View style={styles.headerContent}>
                     <Text style={styles.greeting}>Hello, Maria</Text>
@@ -35,6 +81,7 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
                 <Text style={styles.welcome}>Welcome to Pisval Tech POS</Text>
             </View>
 
+            {/* Search bar remains unchanged */}
             <View style={styles.searchContainer}>
                 <FontAwesome name="search" size={20} color="#999" style={styles.searchIcon} />
                 <TextInput
@@ -48,6 +95,7 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
 
             <Text style={[styles.alignStart]}>Select Your Package</Text>
 
+            {/* Package cards with original colors */}
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -60,7 +108,10 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
                             styles.packageCard,
                             { backgroundColor: selectedPackage === pkg ? '#1F2937' : 'white' },
                         ]}
-                        onPress={() => onPackageSelect(pkg)}
+                        onPress={() => {
+                            onPackageSelect(pkg);
+                            handlePackageSelect(pkg);
+                        }}
                     >
                         <Text
                             style={[
@@ -70,30 +121,51 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
                         >
                             {pkg}
                         </Text>
-                        {pkg === 'Custom' && <Text style={styles.customText}></Text>}
                     </TouchableOpacity>
                 ))}
             </ScrollView>
 
-            <View style={styles.packageDetailsContainer}>
-                {selectedPackage === 'Starter' && (
-                    <View style={styles.starterSection}>
-                        <Text style={styles.starterTitle}>Starter Package</Text>
-                        <Text style={styles.welcomeText}>Welcome to Pisval Tech POS</Text>
+            {/* Package details section with dynamic background */}
+            <View style={styles.packageDetailsContainer} {...panResponder.panHandlers}>
+                <Animated.View style={{ transform: [{ translateX: slideAnim }] }}>
+                    <View style={[
+                        styles.starterSection,
+                        { backgroundColor: packageColors[currentPackage] }
+                    ]}>
+                        <Text style={[styles.starterTitle, { color: 'white' }]}>
+                            {currentPackage} Package
+                        </Text>
+                        <Text style={[styles.welcomeText, { color: 'white' }]}>
+                            {getPackageDescription(currentPackage)}
+                        </Text>
                         <View style={styles.ctaContainer}>
                             <TouchableOpacity>
-                                <Text style={styles.seeMoreLink}>See more</Text>
+                                <Text style={[styles.seeMoreLink, { color: 'white' }]}>
+                                    See more
+                                </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.buyButton}>
-                                <Text style={styles.buyButtonText}>Buy</Text>
+                            <TouchableOpacity style={[styles.buyButton, { backgroundColor: 'white' }]}>
+                                <Text style={[styles.buyButtonText, { color: packageColors[currentPackage] }]}>
+                                    Buy
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                )}
-                {/* Add other package details here */}
+                </Animated.View>
             </View>
         </ScrollView>
     );
+};
+
+// Helper function for package descriptions
+const getPackageDescription = (pkg: PackageType) => {
+    switch (pkg) {
+        case 'Starter': return 'Welcome to Pisval Tech POS';
+        case 'Growth': return 'Expand your business with advanced tools';
+        case 'Custom': return 'Tailor-made solutions for your needs';
+        case 'Enterprise': return 'Comprehensive solutions for large businesses';
+        case 'Premium': return 'Top-tier features for maximum efficiency';
+    }
 };
 
 export default packagePresenter;

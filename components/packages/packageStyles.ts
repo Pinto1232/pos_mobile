@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#F3F4F6',
         minHeight: '100%',
         
     },
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     greeting: {
         fontSize: 24,
         fontWeight: '600',
-        color: '#333',
+        color: '#000',
         marginBottom: 8,
     },
     avatar: {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
     welcome: {
         fontSize: 16,
-        color: '#666',
+        color: '#000',
     },
     searchContainer: {
         flexDirection: 'row',
@@ -62,6 +62,14 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         gap: 5,
         paddingVertical: 10,
+        backgroundColor: '#fff',
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        paddingHorizontal: 15,
+        marginBottom: 30,
+        padding: 15,
+        margin: 10
     },
     packageCard: {
         paddingVertical: 10,
@@ -74,6 +82,7 @@ const styles = StyleSheet.create({
         width: 130, 
         alignItems: 'center',
         justifyContent: 'center',
+        borderColor: '#ddd',
     },
     packageTitle: {
         fontSize: 18,
@@ -95,19 +104,26 @@ const styles = StyleSheet.create({
     },
 
     starterSection: {
-        backgroundColor: '#F8F9FA',
+        backgroundColor: '#F59E0B',
         borderRadius: 50,
         margin: 10,
         padding: 30,
         width: '95%',
         height: 300,
         zIndex: 999,
-        position: 'relative'
+        position: 'relative',
+        shadowColor: '#000',
+        shadowOffset: { width: 4, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 9,
+        borderWidth: 1,
+        borderColor: '#fff',
     },
     starterTitle: {
         fontSize: 20,
-        fontWeight: '600',
-        color: '#333',
+        fontWeight: '800',
+        color: '#000',
         marginBottom: 15,
     },
     welcomeText: {
@@ -127,7 +143,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: '600',
         textAlign: 'center',
-        marginLeft: 82
+        marginLeft: 79
     },
     buyButton: {
         backgroundColor: '#fff',
@@ -152,10 +168,11 @@ const styles = StyleSheet.create({
     packageDetailsContainer: {
         marginTop: 20,
         padding: 0,
-        backgroundColor: '#fff',
+        backgroundColor: '#ffffff',
         borderRadius: 10,
         boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.1)',
-        elevation: 3,
+        elevation: 5,
+        height:320
     },
 });
 
