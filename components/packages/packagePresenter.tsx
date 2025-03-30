@@ -78,18 +78,19 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
                     />
                 </View>
                 <Text style={styles.welcome}>Welcome to Pisval Tech POS</Text>
+                <View style={styles.searchContainer}>
+                    <FontAwesome name="search" size={20} color="#999" style={styles.searchIcon} />
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChangeText={onSearchQueryChange}
+                        placeholderTextColor="#999"
+                    />
+                </View>
             </View>
 
-            <View style={styles.searchContainer}>
-                <FontAwesome name="search" size={20} color="#999" style={styles.searchIcon} />
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChangeText={onSearchQueryChange}
-                    placeholderTextColor="#999"
-                />
-            </View>
+
 
             <Text style={[styles.alignStart]}>Select Your Package</Text>
 
