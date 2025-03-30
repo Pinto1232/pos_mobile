@@ -25,20 +25,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Home',
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color="#FFFFFF" />,
+          tabBarLabel: 'Home',
+          tabBarLabelStyle: {
+            color: '#FFFFFF',
+          },
+          tabBarStyle: {
+            backgroundColor: '#173A79',
+          },
+          headerStyle: {
+            backgroundColor: '#173A79',
+          },
+          headerTintColor: '#FFFFFF',
           headerRight: () => (
             <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
             </Link>
           ),
         }}
