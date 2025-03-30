@@ -122,8 +122,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 12,
         elevation: 10,
-        borderWidth: 1,
-        borderColor: '#FFFFFF',
+  
     },
     starterTitle: {
         fontSize: 24,

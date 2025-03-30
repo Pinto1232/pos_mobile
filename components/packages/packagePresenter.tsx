@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Animated, PanResponder } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Animated, PanResponder, ImageBackground } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import styles from './packageStyles';
@@ -66,7 +66,6 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            {/* Header remains unchanged */}
             <View style={styles.header}>
                 <View style={styles.headerContent}>
                     <Text style={styles.greeting}>Hello, Maria</Text>
@@ -75,13 +74,12 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
                         icon={{ name: 'user', type: 'font-awesome', color: '#fff' }}
                         size="medium"
                         containerStyle={styles.avatar}
-                        overlayContainerStyle={{ backgroundColor: '#2196F3' }}
+                        overlayContainerStyle={{ backgroundColor: '#1E3A8A' }}
                     />
                 </View>
                 <Text style={styles.welcome}>Welcome to Pisval Tech POS</Text>
             </View>
 
-            {/* Search bar remains unchanged */}
             <View style={styles.searchContainer}>
                 <FontAwesome name="search" size={20} color="#999" style={styles.searchIcon} />
                 <TextInput
@@ -95,7 +93,6 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
 
             <Text style={[styles.alignStart]}>Select Your Package</Text>
 
-            {/* Package cards with original colors */}
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -104,20 +101,14 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
                 {packages.map((pkg) => (
                     <TouchableOpacity
                         key={pkg}
-                        style={[
-                            styles.packageCard,
-                            { backgroundColor: selectedPackage === pkg ? '#1F2937' : 'white' },
-                        ]}
+                        style={[styles.packageCard, { backgroundColor: selectedPackage === pkg ? '#1F2937' : 'white' }]}
                         onPress={() => {
                             onPackageSelect(pkg);
                             handlePackageSelect(pkg);
                         }}
                     >
                         <Text
-                            style={[
-                                styles.packageTitle,
-                                { color: selectedPackage === pkg ? 'white' : 'black' },
-                            ]}
+                            style={[styles.packageTitle, { color: selectedPackage === pkg ? 'white' : 'black' }]}
                         >
                             {pkg}
                         </Text>
@@ -125,13 +116,13 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
                 ))}
             </ScrollView>
 
-            {/* Package details section with dynamic background */}
             <View style={styles.packageDetailsContainer} {...panResponder.panHandlers}>
                 <Animated.View style={{ transform: [{ translateX: slideAnim }] }}>
-                    <View style={[
-                        styles.starterSection,
-                        { backgroundColor: packageColors[currentPackage] }
-                    ]}>
+                    <ImageBackground
+                        source={require('../../assets/images/pos.png')}
+                        style={styles.starterSection}
+                        imageStyle={{ borderRadius: 30 }}
+                    >
                         <Text style={[styles.starterTitle, { color: 'white' }]}>
                             {currentPackage} Package
                         </Text>
@@ -150,14 +141,13 @@ const packagePresenter: React.FC<PackageSelectionScreenPresenterProps> = ({
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
+                    </ImageBackground>
                 </Animated.View>
             </View>
         </ScrollView>
     );
 };
 
-// Helper function for package descriptions
 const getPackageDescription = (pkg: PackageType) => {
     switch (pkg) {
         case 'Starter': return 'Welcome to Pisval Tech POS';
