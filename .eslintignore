@@ -1,0 +1,8 @@
+node_modules/
+.expo/
+dist/
+web-build/
+*.config.js
+coverage/
+__tests__/
+*.d.ts 

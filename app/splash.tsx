@@ -1,8 +1,21 @@
 import { useEffect, useState } from 'react';
-import { View, Image, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+  Text,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, withSequence } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  withSequence,
+} from 'react-native-reanimated';
+import { Colors } from '@/constants/Colors';
 
 export default function SplashScreen() {
   const router = useRouter();
@@ -15,16 +28,18 @@ export default function SplashScreen() {
     scaleAnim.value = withRepeat(
       withSequence(
         withTiming(1.2, { duration: 1000 }),
-        withTiming(1, { duration: 1000 })
+        withTiming(1, { duration: 1000 }),
       ),
       -1,
-      true
+      true,
     );
 
     fadeAnim.value = withTiming(1, { duration: 2000 });
 
     const dotInterval = setInterval(() => {
-      setDots((prev) => (prev.length < 3 ? prev + '.' : ''));
+      setDots((prev) =>
+        prev.length < 3 ? prev + '.' : '',
+      );
     }, 500);
 
     const timer = setTimeout(() => {
@@ -35,7 +50,7 @@ export default function SplashScreen() {
       clearTimeout(timer);
       clearInterval(dotInterval);
     };
-  }, []);
+  }, [fadeAnim, router, scaleAnim]);
 
   const animatedLogoStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scaleAnim.value }],
@@ -47,7 +62,7 @@ export default function SplashScreen() {
 
   return (
     <LinearGradient
-      colors={['#1E3A8A', '#006D77']}
+      colors={[Colors.primary, Colors.secondary]}
       locations={[0, 1]}
       style={styles.gradient}
     >
@@ -56,22 +71,32 @@ export default function SplashScreen() {
           source={require('../assets/images/logo.jpg')}
           style={[styles.logo, animatedLogoStyle]}
         />
-        <Animated.Text style={[styles.text, animatedTextStyle]}>
+        <Animated.Text
+          style={[styles.text, animatedTextStyle]}
+        >
           Welcome To Pisval Tech POS
         </Animated.Text>
-        <ActivityIndicator size="large" color="#FE6903" style={styles.loader} />
+        <ActivityIndicator
+          size='large'
+          color={Colors.warning}
+          style={styles.loader}
+        />
         <Text style={styles.loadingText}>
           Loading{dots}
         </Text>
         {!imageLoaded && (
-          <ActivityIndicator size="large" color="#FFFFFF" style={styles.loader} />
+          <ActivityIndicator
+            size='large'
+            color={Colors.text.white}
+            style={styles.loader}
+          />
         )}
         <Image
           source={require('../assets/images/pos.png')}
           style={[
             styles.bottomImage,
-            { width: 580, height: 450, marginTop: 40 },
-            !imageLoaded && { opacity: 0 },
+            styles.bottomImageLarge,
+            !imageLoaded && styles.hiddenImage,
           ]}
           onLoad={() => setImageLoaded(true)}
         />
@@ -81,41 +106,52 @@ export default function SplashScreen() {
 }
 
 const styles = StyleSheet.create({
+  bottomImage: {
+    height: 200,
+    marginTop: 20,
+    resizeMode: 'contain',
+    width: 200,
+  },
+  bottomImageLarge: {
+    height: 450,
+    marginTop: 40,
+    width: 580,
+  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    flex: 1,
+    justifyContent: 'center',
+  },
   gradient: {
     flex: 1,
   },
-  container: {
-    backgroundColor: '#1E3A8A',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+  hiddenImage: {
+    opacity: 0,
   },
-  logo: {
-    width: 120,
-    height: 120,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-    borderRadius: 80,
-    marginTop: 120
-  },
-  text: {
-    marginTop: 20,
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#FFFFFF',
-    textAlign: 'center',
-  },
-  loader: { marginTop: 20, color: 'blue' },
-  bottomImage: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
+  loader: {
+    color: Colors.primary,
     marginTop: 20,
   },
   loadingText: {
-    marginTop: 10,
+    color: Colors.text.white,
     fontSize: 16,
-    color: '#FFFFFF',
+    marginTop: 10,
+    textAlign: 'center',
+  },
+  logo: {
+    alignSelf: 'center',
+    borderRadius: 80,
+    height: 120,
+    marginTop: 120,
+    resizeMode: 'contain',
+    width: 120,
+  },
+  text: {
+    color: Colors.text.white,
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: 20,
     textAlign: 'center',
   },
 });

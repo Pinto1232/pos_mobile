@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
-import PackageSelectionScreenPresenter, { PackageType } from '@/components/packages/packagePresenter';
+import PackagePresenter from './packagePresenter';
+import { PackageType } from './packagePresenter';
+
+const packages: PackageType[] = [
+  'Starter',
+  'Growth',
+  'Custom',
+  'Enterprise',
+  'Premium',
+];
 
 const PackageContainer: React.FC = () => {
-    const [selectedPackage, setSelectedPackage] = useState<PackageType>('Starter');
-    const [searchQuery, setSearchQuery] = useState('');
+  const [selectedPackage, setSelectedPackage] =
+    useState<PackageType>('Starter');
+  const [searchQuery, setSearchQuery] = useState('');
 
-    // Explicitly type the packages array
-    const packages: PackageType[] = ['Starter', 'Growth', 'Custom', 'Enterprise', 'Premium'];
-
-    return (
-        <PackageSelectionScreenPresenter
-            selectedPackage={selectedPackage}
-            searchQuery={searchQuery}
-            packages={packages}
-            onSearchQueryChange={setSearchQuery}
-            onPackageSelect={setSelectedPackage}
-        />
-    );
+  return (
+    <PackagePresenter
+      selectedPackage={selectedPackage}
+      searchQuery={searchQuery}
+      packages={packages}
+      onSearchQueryChange={setSearchQuery}
+      onPackageSelect={setSelectedPackage}
+    />
+  );
 };
 
 export default PackageContainer;

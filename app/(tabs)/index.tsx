@@ -1,13 +1,16 @@
-import { StyleSheet } from 'react-native';
-import { Text, View } from '@/components/Themed';
+import { View, StyleSheet } from 'react-native';
 import PackageContainer from '@/components/packages/packageContainer';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default function TabOneScreen() {
   return (
-    <View>
+    <View style={styles.container}>
       <PackageContainer />
     </View>
   );
 }
-
-
